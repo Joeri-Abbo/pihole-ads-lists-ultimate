@@ -3,6 +3,7 @@ import urllib
 import os
 import re
 
+# Main
 def main():
     ads_list_temp = 'ads_list_temp.txt'
     ads_list = 'ads_list.txt'
@@ -60,8 +61,6 @@ def getSources():
 
     return sources
 
-
-
-
+# Main
 if __name__ == "__main__":
     main()
