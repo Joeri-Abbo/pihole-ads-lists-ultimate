@@ -1,18 +1,40 @@
 #!/usr/bin/env python
 import urllib
 import os
+import re
 
 def main():
-    data = getData()
+    ads_list_temp = 'ads_list_temp.txt'
     ads_list = 'ads_list.txt'
-    writeToFile(data, ads_list)
-   
-def writeToFile(data, ads_list):
+    data = getData()
+    writeToTempFile(data, ads_list_temp)
+    generateCleanFile( ads_list, ads_list_temp)
+
+# Generating a clean file
+def generateCleanFile(ads_list, ads_list_temp):
+    source = open(ads_list_temp,'r')
     if os.path.exists(ads_list):
-        print('Deleted the file')
+        print('Deleted the build file')
         os.remove(ads_list)
+    ads_list_file = open(ads_list,'w+')
+    print('Generating clean file')
+    for line in source.readlines():
+        x = re.findall("^#", line)
+        if not x:
+            ads_list_file.write(line)
+
+    if os.path.exists(ads_list):
+        print('Delete the temp file')
+        os.remove(ads_list_temp)
+
+
+# Write to file the sources data
+def writeToTempFile(data, ads_list_temp):
+    if os.path.exists(ads_list_temp):
+        print('Deleted the temp file')
+        os.remove(ads_list_temp)
     print('fetched all content writing')
-    f= open(ads_list,"w+")
+    f= open(ads_list_temp,"w+")
     f.write(data)
     f.close()
     print('Finished')
