@@ -7,12 +7,12 @@ import re
 def main():
     ads_list_temp = 'ads_list_temp.txt'
     ads_list = 'ads_list.txt'
-    data = getData()
-    writeToTempFile(data, ads_list_temp)
-    generateCleanFile( ads_list, ads_list_temp)
+    data = get_data()
+    write_to_temp_file(data, ads_list_temp)
+    generate_clean_file( ads_list, ads_list_temp)
 
 # Generating a clean file
-def generateCleanFile(ads_list, ads_list_temp):
+def generate_clean_file(ads_list, ads_list_temp):
     source = open(ads_list_temp,'r')
     if os.path.exists(ads_list):
         print('Deleted the build file')
@@ -30,7 +30,7 @@ def generateCleanFile(ads_list, ads_list_temp):
 
 
 # Write to file the sources data
-def writeToTempFile(data, ads_list_temp):
+def write_to_temp_file(data, ads_list_temp):
     if os.path.exists(ads_list_temp):
         print('Deleted the temp file')
         os.remove(ads_list_temp)
@@ -41,9 +41,9 @@ def writeToTempFile(data, ads_list_temp):
     print('Finished')
 
 # Get the content
-def getData():
+def get_data():
     data = ''
-    for source in getSources():
+    for source in get_sources():
         print('Fetching {}!'.format(source))
 
         f = urllib.urlopen(source)
@@ -53,7 +53,7 @@ def getData():
     return data
 
 # Get sources
-def getSources():
+def get_sources():
     sources = []
     with open('../sources.txt') as my_file:
         for line in my_file:
