@@ -2,21 +2,23 @@ use std::fs::File;
 use std::fs;
 use std::io::{self, BufRead};
 use std::path::Path;
-use std::io::Read;
 
 extern crate reqwest;
 
 
 fn main() {
-    let data = "Mandje";
+    let mut data = String::new();
     if let Ok(lines) = read_lines("../sources.txt") {
         for line in lines {
             if let Ok(url) = line {
-                println!("{}", url);
-                fetch(url);
+                println!("Fetching {}", url);
+                data.push_str("\n");
+                data.push_str(fetch(url).as_str());
             }
         }
     }
+    println!("Finished fetching lets store");
+
     fs::write("ads_list.txt", data).expect("Unable to write file");
     println!("{}", "Done");
 }
@@ -27,11 +29,7 @@ fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
     Ok(io::BufReader::new(file).lines())
 }
 
-fn fetch(url: String) -> Result<(), Box<dyn std::error::Error>> {
-    println!("url: {}", url);
-
-    let content = reqwest::get(&url)?.text_with_charset("utf-8")?;
-
-    println!("url: {}", content);
-    Ok(())
+fn fetch(url: String) -> String {
+    let request = reqwest::get(&url);
+    return request.unwrap().text_with_charset("utf-8").unwrap();
 }
