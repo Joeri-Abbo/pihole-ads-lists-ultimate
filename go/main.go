@@ -85,6 +85,4 @@ func printGopher() {
 	}
 	fmt.Println(string(b))
 	fmt.Println("         ")
-	fmt.Println("         Gopher")
-	fmt.Println("         ")
 }
