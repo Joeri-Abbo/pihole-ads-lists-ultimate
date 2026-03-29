@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import urllib
+import urllib.request
 import os
 import re
 
@@ -46,9 +46,9 @@ def get_data():
     for source in get_sources():
         print('Fetching {}!'.format(source))
 
-        f = urllib.urlopen(source)
+        f = urllib.request.urlopen(source)
         data += "\n"
-        data += f.read()
+        data += f.read().decode('utf-8')
 
     return data
 

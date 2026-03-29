@@ -3,9 +3,6 @@ use std::fs;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-extern crate reqwest;
-
-
 fn main() {
     let mut data = String::new();
     if let Ok(lines) = read_lines("../sources.txt") {
@@ -30,6 +27,6 @@ fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 }
 
 fn fetch(url: String) -> String {
-    let request = reqwest::get(&url);
+    let request = reqwest::blocking::get(&url);
     return request.unwrap().text_with_charset("utf-8").unwrap();
 }
